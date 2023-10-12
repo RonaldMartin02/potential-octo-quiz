@@ -53,26 +53,16 @@ const myQuestions = [
 
 function checkAnswer(){ alert(this.id)
 if(this.id === myQuestions[qNumb].correctAnswer){
-  uScore += myQuestions[qNumb].points;
-  if(qNumb<myQuestions.length){
-    qNumb++ 
-  }
-  else{
-    alert("end of quiz")
-  }
-  
-  
-  console.log(uScore);
   rightAnswer();
 }
 else{
-  qNumb++
   wrongAnswer();
 }
 }
 function rightAnswer(){
-  alert("correct " + uScore);
+  uScore += myQuestions[qNumb].points;
   if(qNumb<myQuestions.length){
+    qNumb++;
     changeQuestion()
   } else {
     alert("end of quiz")
@@ -81,6 +71,7 @@ function rightAnswer(){
 function wrongAnswer(){
 alert("wrong "+ "");
 if(qNumb<myQuestions.length){
+  qNumb++;
   changeQuestion()
 } else {
   alert("end of quiz")
