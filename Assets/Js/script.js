@@ -20,12 +20,18 @@ answerBtn4.setAttribute('id','d');
 
 var aDiv = document.querySelector("#answer-div")
 var aHeader= document.createElement("h2");
+
+var eQuiz = document.querySelector("#end-quiz")
+
 var timeLeft = 59;
 var qCount = 0;
 var qNumb = 0;
 var uScore = 0;
 var highScore = [];
-
+var highscorePlayer = {
+  name : '',
+  highscore: 0,  
+} ;
 const myQs = [
   {
     question: "what is 1 + 1",
@@ -171,9 +177,10 @@ function rightAnswer(){
 }
 
 function wrongAnswer(){
-if(qNumb<=myQs.length){
+if(qNumb<myQs.length){
   qNumb++;
   changeQuestion()
+  
 } else {
   endQuiz()
 }
@@ -196,11 +203,15 @@ function timer(){
   }
   
 function changeQuestion(){
+  if(qNumb<myQs.length){
   questionText.textContent = myQs[qNumb].question;
-  answerBtn1.textContent = myQs[qNumb].answers["a"]
+  answerBtn1.textContent = myQs[qNumb].answers["a"];
   answerBtn2.textContent = myQs[qNumb].answers["b"];
   answerBtn3.textContent = myQs[qNumb].answers["c"];
   answerBtn4.textContent = myQs[qNumb].answers["d"];
+} else {
+  endQuiz();
+}
 }
 function startQuiz(){
   document.getElementById("start-quiz").remove();
@@ -220,11 +231,14 @@ function startQuiz(){
 }
 function endQuiz(){
   document.getElementById("quiz").remove();
-  saveScore(uScore)
+  highscorePlayer = {
+    name: prompt("what is your name"),
+    highscore: uScore
+  }
+  saveScore(highscorePlayer)
 }
-function saveScore(event){
-  event.preventDefault();
-  localStorage.setItem('highScore',uScore)
+function saveScore(highscorePlayer){
+  localStorage.setItem('highScore', JSON.stringify(highscorePlayer))
 }
 function getScore(){
   var storedhScore = JSON.parse(localStorage.getItem("highScore"));
