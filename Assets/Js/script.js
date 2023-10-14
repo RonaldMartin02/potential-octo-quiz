@@ -1,11 +1,14 @@
 var startBtn = document.querySelector("#start-btn")
 
 var qDiv = document.querySelector("#quiz")
+timer
 var tHeader = document.querySelector("#timer")
 var timerEl=document.createElement("p")
 timerEl.setAttribute('style','');
 tHeader.setAttribute('style','display: flex; width:100%; justify-content:flex-end');
 
+
+//quiz page
 var questionText = document.createElement("h1");
 
 var answerBtn1 = document.createElement("button");
@@ -17,11 +20,17 @@ answerBtn3.setAttribute('id','c');
 var answerBtn4 = document.createElement("button");
 answerBtn4.setAttribute('id','d');
 
-
 var aDiv = document.querySelector("#answer-div")
 var aHeader= document.createElement("h2");
 
+
+//end quiz page
 var eQuiz = document.querySelector("#end-quiz")
+
+//highscore page
+var highscoreButton = document.createElement("button");
+highscoreButton.setAttribute('id','highscore-btn');
+
 
 var timeLeft = 59;
 var qCount = 0;
@@ -230,15 +239,18 @@ function startQuiz(){
   answerBtn4.textContent = myQs[qNumb].answers["d"];
 }
 function endQuiz(){
+  document.getElementById("timer").remove();
   document.getElementById("quiz").remove();
   highscorePlayer = {
     name: prompt("what is your name"),
     highscore: uScore
   }
-  saveScore(highscorePlayer)
+  highScore.push(highscorePlayer)
+  saveScore()
+ 
 }
 function saveScore(highscorePlayer){
-  localStorage.setItem('highScore', JSON.stringify(highscorePlayer))
+  localStorage.setItem('highScore', JSON.stringify(highScore))
 }
 function getScore(){
   var storedhScore = JSON.parse(localStorage.getItem("highScore"));
@@ -256,3 +268,8 @@ answerBtn1.addEventListener("click",checkAnswer)
 answerBtn2.addEventListener("click",checkAnswer)
 answerBtn3.addEventListener("click",checkAnswer)
 answerBtn4.addEventListener("click",checkAnswer)
+
+//<form id="todo-form" method="POST">
+//<label for="todo-text">Add a Todo: </label>
+//<input type="text" placeholder="I need to..." name="todo-text" id="todo-text" />
+//</form>
