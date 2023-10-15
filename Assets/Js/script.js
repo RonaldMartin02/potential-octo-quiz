@@ -1,24 +1,31 @@
-var startBtn = document.querySelector("#start-btn")
 
-var qDiv = document.querySelector("#quiz")
-timer
+var sqDiv = document.querySelector("#start-quiz")
+var startBtn = document.querySelector("#start-btn")
+sqDiv.setAttribute('style','width:100%; height:100%; text-align:center');
+
+//timer for quiz page
 var tHeader = document.querySelector("#timer")
 var timerEl=document.createElement("p")
 timerEl.setAttribute('style','');
 tHeader.setAttribute('style','display: flex; width:100%; justify-content:flex-end');
 
 
-//quiz page
+var qDiv = document.querySelector("#quiz")
+qDiv.setAttribute('style','width:100%; text-align:center;');
 var questionText = document.createElement("h1");
 
 var answerBtn1 = document.createElement("button");
 answerBtn1.setAttribute('id','a');
+answerBtn1.setAttribute('class','btn');
 var answerBtn2 = document.createElement("button");
 answerBtn2.setAttribute('id','b');
+answerBtn2.setAttribute('class','btn');
 var answerBtn3 = document.createElement("button");
 answerBtn3.setAttribute('id','c');
+answerBtn3.setAttribute('class','btn');
 var answerBtn4 = document.createElement("button");
 answerBtn4.setAttribute('id','d');
+answerBtn4.setAttribute('class','btn');
 
 var aDiv = document.querySelector("#answer-div")
 var aHeader= document.createElement("h2");
@@ -26,6 +33,12 @@ var aHeader= document.createElement("h2");
 
 //end quiz page
 var eQuiz = document.querySelector("#end-quiz")
+var highscorePagebtn = document.createElement("button")
+var highscorePageh1 = document.createElement("input")
+
+eQuiz.setAttribute('style','display: flex; width:100%; justify-content:space-around');
+highscorePagebtn.setAttribute('style','display: flex; width:100px;');
+highscorePageh1.setAttribute('style','display: flex; width:100%; justify-content:space-around');
 
 //highscore page
 var highscoreButton = document.createElement("button");
@@ -165,20 +178,24 @@ const myQs = [
   }
 ];
 
+
 function checkAnswer(){
-  //alert(this.id)
 if(this.id === myQs[qNumb].correctAnswer){
-  rightAnswer();
+  rightAnswer(); 
+  aHeaderTimer('correct') 
 }
 else{
   wrongAnswer();
+  aHeaderTimer('wrong') 
 }
 }
 
 function rightAnswer(){
+  
   uScore += myQs[qNumb].points;
   if(qNumb<myQs.length){
     qNumb++;
+    
     changeQuestion()
   } else {
     endQuiz()
@@ -186,14 +203,30 @@ function rightAnswer(){
 }
 
 function wrongAnswer(){
+  
 if(qNumb<myQs.length){
   qNumb++;
+  
   changeQuestion()
   
 } else {
   endQuiz()
 }
 }
+function aHeaderTimer(answer){
+  aDiv.append(aHeader);
+  aHeader.textContent = answer;
+  var aHeaderTimeLeft = 1;
+    var timeInterval = setInterval(() => {
+      if (aHeaderTimeLeft >= 1) {
+        aHeader.textContent = answer;
+        aHeaderTimeLeft--;
+      } else {
+        aHeader.textContent = '';
+        clearInterval(timeInterval);
+      }
+    }, 250);
+  }
 function timer(){
     var timeInterval = setInterval(() => {
       
@@ -218,6 +251,7 @@ function changeQuestion(){
   answerBtn2.textContent = myQs[qNumb].answers["b"];
   answerBtn3.textContent = myQs[qNumb].answers["c"];
   answerBtn4.textContent = myQs[qNumb].answers["d"];
+  
 } else {
   endQuiz();
 }
@@ -241,8 +275,12 @@ function startQuiz(){
 function endQuiz(){
   document.getElementById("timer").remove();
   document.getElementById("quiz").remove();
+  aDiv.remove();
+  eQuiz.append(highscorePageh1);
+  highscorePageh1.textContent = uScore.toString();
+  eQuiz.append(highscorePagebtn);
   highscorePlayer = {
-    name: prompt("what is your name"),
+    name: 'greg',
     highscore: uScore
   }
   highScore.push(highscorePlayer)
@@ -272,4 +310,4 @@ answerBtn4.addEventListener("click",checkAnswer)
 //<form id="todo-form" method="POST">
 //<label for="todo-text">Add a Todo: </label>
 //<input type="text" placeholder="I need to..." name="todo-text" id="todo-text" />
-//</form>
+//</form> 
