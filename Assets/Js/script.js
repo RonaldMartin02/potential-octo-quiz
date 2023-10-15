@@ -34,11 +34,11 @@ var aHeader= document.createElement("h2");
 //end quiz page
 var eQuiz = document.querySelector("#end-quiz")
 var highscorePagebtn = document.createElement("button")
-var highscorePageh1 = document.createElement("input")
+var highscorePageInput = document.createElement("input")
 
 eQuiz.setAttribute('style','display: flex; width:100%; justify-content:space-around');
 highscorePagebtn.setAttribute('style','display: flex; width:100px;');
-highscorePageh1.setAttribute('style','display: flex; width:100%; justify-content:space-around');
+highscorePageInput.setAttribute('style','display: flex; width:100%; justify-content:space-around');
 
 //highscore page
 var highscoreButton = document.createElement("button");
@@ -276,11 +276,11 @@ function endQuiz(){
   document.getElementById("timer").remove();
   document.getElementById("quiz").remove();
   aDiv.remove();
-  eQuiz.append(highscorePageh1);
-  highscorePageh1.textContent = uScore.toString();
+  eQuiz.append(highscorePageInput);
+  highscorePageInput.textContent = uScore.toString();
   eQuiz.append(highscorePagebtn);
   highscorePlayer = {
-    name: 'greg',
+    name: highscorePageInput.value,
     highscore: uScore
   }
   highScore.push(highscorePlayer)
@@ -288,7 +288,7 @@ function endQuiz(){
  
 }
 function saveScore(highscorePlayer){
-  localStorage.setItem('highScore', JSON.stringify(highScore))
+  localStorage.setItem('highScore', JSON.stringify(highscorePlayer))
 }
 function getScore(){
   var storedhScore = JSON.parse(localStorage.getItem("highScore"));
@@ -297,7 +297,7 @@ function getScore(){
   }
 }
 function renderHighScore(){
-getScore()
+
 }
 
 
