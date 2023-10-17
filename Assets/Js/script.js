@@ -32,28 +32,32 @@ var aHeader= document.createElement("h2");
 
 
 //end quiz page
-var eQuiz = document.querySelector("#end-quiz")
+
+var hDiv = document.querySelector("#highscore-div")
 var highscorePagebtn = document.createElement("button")
-var highscorePageInput = document.createElement("input")
+var pName = document.createElement("input")
+var highScoreList = document.createElement("ul");
+highScoreList.setAttribute("id","Score-list")
+var highScoreH1 = document.createElement("h1");
 
-eQuiz.setAttribute('style','display: flex; width:100%; justify-content:space-around');
-highscorePagebtn.setAttribute('style','display: flex; width:100px;');
-highscorePageInput.setAttribute('style','display: flex; width:100%; justify-content:space-around');
+pName.setAttribute('style','display: flex;');
+highscorePagebtn.setAttribute('style','display: flex;');
 
+pName.setAttribute('id','player-name');
+highscorePagebtn.textContent = "Submit"
 //highscore page
-var highscoreButton = document.createElement("button");
-highscoreButton.setAttribute('id','highscore-btn');
+
+highscorePagebtn.setAttribute('id','highscore-btn');
+
+hDiv.append(highScoreH1)
+hDiv.append(highScoreList);
 
 
 var timeLeft = 59;
 var qCount = 0;
 var qNumb = 0;
 var uScore = 0;
-var highScore = [];
-var highscorePlayer = {
-  name : '',
-  highscore: 0,  
-} ;
+let highScores = [];
 const myQs = [
   {
     question: "what is 1 + 1",
@@ -177,8 +181,6 @@ const myQs = [
     points: 5
   }
 ];
-
-
 function checkAnswer(){
 if(this.id === myQs[qNumb].correctAnswer){
   rightAnswer(); 
@@ -189,7 +191,6 @@ else{
   aHeaderTimer('wrong') 
 }
 }
-
 function rightAnswer(){
   
   uScore += myQs[qNumb].points;
@@ -201,7 +202,6 @@ function rightAnswer(){
     endQuiz()
   }
 }
-
 function wrongAnswer(){
   
 if(qNumb<myQs.length){
@@ -243,7 +243,6 @@ function timer(){
       }
     }, 1000);
   }
-  
 function changeQuestion(){
   if(qNumb<myQs.length){
   questionText.textContent = myQs[qNumb].question;
@@ -251,7 +250,6 @@ function changeQuestion(){
   answerBtn2.textContent = myQs[qNumb].answers["b"];
   answerBtn3.textContent = myQs[qNumb].answers["c"];
   answerBtn4.textContent = myQs[qNumb].answers["d"];
-  
 } else {
   endQuiz();
 }
@@ -276,38 +274,56 @@ function endQuiz(){
   document.getElementById("timer").remove();
   document.getElementById("quiz").remove();
   aDiv.remove();
-  eQuiz.append(highscorePageInput);
-  highscorePageInput.textContent = uScore.toString();
-  eQuiz.append(highscorePagebtn);
-  highscorePlayer = {
-    name: highscorePageInput.value,
-    highscore: uScore
-  }
-  highScore.push(highscorePlayer)
-  saveScore()
- 
+  hDiv.append(pName);
+  hDiv.append(highscorePagebtn);
+  hDiv.append(highScoreList);
+  getScores();
+ // clearInterval();
 }
-function saveScore(highscorePlayer){
-  localStorage.setItem('highScore', JSON.stringify(highscorePlayer))
+function saveScore(){
+  highScores.push({
+    name: document.getElementById("player-name").value,
+    highscore: parseInt(uScore)
+  })
+  localStorage.setItem('highScores', JSON.stringify(highScores))
+
+const ulElement = document.getElementById('Score-list')
+ulElement.setAttribute('style','list-style-type: none');
+while (ulElement.firstChild) {
+    ulElement.removeChild(ulElement.firstChild);
 }
-function getScore(){
-  var storedhScore = JSON.parse(localStorage.getItem("highScore"));
-  if(storedhScore!== null){
-    highScore = storedhScore
+renderHighScore();
+}
+
+function getScores(){
+  var storedHighscores = JSON.parse(localStorage.getItem("highScores"));
+  if (storedHighscores !== null) {
+  for (var i= 0; i<storedHighscores.length; i++) {
+highScores.push({
+      name: storedHighscores[i].name,
+      highscore: storedHighscores[i].highscore
+    }
+    );
+    
   }
+  }
+  renderHighScore()
 }
 function renderHighScore(){
-
+    highScores.sort((a, b) => b.highscore - a.highscore); 
+    for (var i= 0; i<highScores.length; i++) {
+    var listItem = document.createElement("li");
+    listItem.setAttribute("data-index",i)
+    listItem.textContent = "Name: "+ highScores[i].name + " Score: "+ highScores[i].highscore;
+    listItem.setAttribute('style','list-style-type: none');
+    highScoreList.append(listItem);  
+  }
+ 
 }
-
 
 startBtn.addEventListener("click",startQuiz)
 answerBtn1.addEventListener("click",checkAnswer)
 answerBtn2.addEventListener("click",checkAnswer)
 answerBtn3.addEventListener("click",checkAnswer)
 answerBtn4.addEventListener("click",checkAnswer)
-
-//<form id="todo-form" method="POST">
-//<label for="todo-text">Add a Todo: </label>
-//<input type="text" placeholder="I need to..." name="todo-text" id="todo-text" />
-//</form> 
+highscorePagebtn.addEventListener("click",saveScore)
