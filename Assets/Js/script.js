@@ -55,7 +55,7 @@ var sDiv = document.querySelector("#scores")
 
 
 
-var timeLeft = 90;
+var timeLeft = 19;
 var qCount = 0;
 var qNumb = 0;
 var uScore = 0;
@@ -284,8 +284,8 @@ function endQuiz() {
   var hscorePtag = document.createElement("p")
   sDiv.append(hscorePtag)
 hscorePtag.textContent = "Your score was " + uScore + ". Enter your name down below then press submit to add yourself to the Leaderboard"
-  getScores();
   
+getScores();  
   
 }
 function saveScore() {

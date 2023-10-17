@@ -24,3 +24,23 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and my score
 ```
+
+
+## Deployment
+
+[Link to the website](https://ronaldmartin02.github.io/potential-octo-quiz/)
+ ![Image 1 of my Website Deployed](./Assets/Img/startpage.PNG)
+ ![Image 2 of my Website Deployed](./Assets/Img/quizPage.PNG)
+ ![Image 3 of my Website Deployed](./Assets/Img/highscorePage.png)
+
+## Usage
+
+To use this , press the Start Quiz button. This will generate a math quiz when clicked. After you click the button you will have 20 seconds to finish the quiz. Once you answer all the questions or the time runs out it the highscore screen will pop up.  
+
+## Credits
+
+N/A
+
+## License
+
+MIT License
