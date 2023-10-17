@@ -1,3 +1,59 @@
 :root{
-    background-color: lemonchiffon;
+    background-color: lightblue;
+    font-size: 2em;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif 
+}
+
+h1{
+    border: 2px solid black;
+    background-color: rgb(119, 204, 233);
+}
+button{
+    background-color: rgba(0, 0, 255, 0.685);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    align-items: center;
+    
+}
+button#start-btn{
+width: 50%;
+padding: 10px;
+text-align: center;
+font-size: 1.5em;
+}
+#highscore-div button{
+    width: 50%;
+}
+#quiz button{
+    width: 48%;
+    margin: 0.9%;
+}
+div#highscore-div{
+display: flex;
+flex-direction: row;
+width:100%;
+}
+input{
+height:4em;
+width: 50%;
+}
+div#scores{
+display: flex;
+flex-direction: column;
+width: 100%;
+align-items: center;
+text-align: start;
+}
+ul{
+    font-size: 1.5em;
+}
+
+
+button:hover  {
+    border: 2px solid black;
+}
+input:hover{
+    border: 2px solid black;
 }
